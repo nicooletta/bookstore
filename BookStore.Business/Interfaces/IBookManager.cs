@@ -6,6 +6,7 @@ namespace BookStore.Business.Interfaces
 {
     public interface IBookManager
     {
-        Task<Book> CreateBook(BookCreateDTO newBook);
+        Task<Book> CreateBookAsync(BookCreateDTO newBook);
+        Task<Book> UpdateBookAsync(BookUpdateDTO updateBook);
     }
 }

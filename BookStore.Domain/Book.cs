@@ -1,4 +1,6 @@
-﻿namespace BookStore.Domain
+﻿using System.Collections.Generic;
+
+namespace BookStore.Domain
 {
     public class Book
     {

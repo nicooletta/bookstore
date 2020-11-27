@@ -34,8 +34,8 @@ namespace BookStore.Repository
                 return null;
             }
 
-            return context.Authors.FirstOrDefault(x => string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase)
-                                        && string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase));
+            return context.Authors.FirstOrDefault(x => x.FirstName.ToLower() == firstName.ToLower() &&
+                x.LastName.ToLower() == lastName.ToLower());
         }
     }
 }

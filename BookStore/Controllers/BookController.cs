@@ -40,7 +40,7 @@ namespace BookStore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdBook = await bookManager.CreateBook(newBook);
+            var createdBook = await bookManager.CreateBookAsync(newBook);
             var bookView = new BookViewModel
             {
                 Author = createdBook.Author.FirstName + " " + createdBook.Author.LastName,
@@ -50,6 +50,28 @@ namespace BookStore.Controllers
                 IsInStock = createdBook.InStock > 0,
                 Name = createdBook.Name,
                 Price = createdBook.Price
+            };
+            return Ok(bookView);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<BookViewModel>> UpdateBookAsync(BookUpdateDTO updateBook)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updatedBook = await bookManager.UpdateBookAsync(updateBook);
+            var bookView = new BookViewModel
+            {
+                BookId = updateBook.BookId,
+                Description = updatedBook.Description,
+                ImageUrl = updatedBook.ImageUrl,
+                IsInStock = updatedBook.InStock > 0,
+                Name = updatedBook.Name,
+                Price = updatedBook.Price,
+                Author = updatedBook.Author.FirstName + " " + updatedBook.Author.LastName,
             };
             return Ok(bookView);
         }

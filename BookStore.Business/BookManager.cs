@@ -18,7 +18,7 @@ namespace BookStore.Business
             this.authorRepository = authorRepository;
         }
          
-        public async Task<Book> CreateBook(BookCreateDTO newBook)
+        public async Task<Book> CreateBookAsync(BookCreateDTO newBook)
         {
             var bookToSave = new Book
             {
@@ -34,6 +34,28 @@ namespace BookStore.Business
             bookToSave.Author = author;
 
             var book = await bookRepository.AddBookAsync(bookToSave);
+            return book;
+        }
+
+        public async Task<Book> UpdateBookAsync(BookUpdateDTO updateBook)
+        {
+            
+            var currentBook = await bookRepository.FindBook(updateBook.BookId);
+            bool isAuthorChanged = updateBook.AuthorId != currentBook.AuthorId;
+            currentBook.Name = updateBook.Name;
+            currentBook.Description = updateBook.Description;
+            currentBook.ImageUrl = updateBook.ImageUrl;
+            currentBook.Price = updateBook.Price;
+            currentBook.InStock = updateBook.InStock;
+            currentBook.AuthorId = updateBook.AuthorId;
+
+            var book = await bookRepository.UpdateBookAsync(currentBook);
+
+            if (isAuthorChanged)
+            {
+                currentBook.Author = await authorRepository.FindAsync(currentBook.AuthorId);
+            }
+
             return book;
         }
 
