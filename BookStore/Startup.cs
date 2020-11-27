@@ -1,5 +1,6 @@
 using BookStore.Business;
 using BookStore.Business.Interfaces;
+using BookStore.Configuration;
 using BookStore.Repository;
 using BookStore.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -49,6 +50,8 @@ namespace BookStore
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            ExceptionMiddlewareExtensions.ConfigureExceptionHandler(app);
 
             app.UseHttpsRedirection();
 
