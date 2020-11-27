@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Compile Remove="BooksCustomers.cs" />
-    <Compile Remove="Customer.cs" />
   </ItemGroup>
 
 </Project>

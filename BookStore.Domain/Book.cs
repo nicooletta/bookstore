@@ -12,5 +12,7 @@ namespace BookStore.Domain
         public string ImageUrl { get; set; }
         public int InStock { get; set; }
         public Author Author { get; set; }
+
+        public IEnumerable<CustomerBook> BookBuyers { get; set; }
     }
 }
