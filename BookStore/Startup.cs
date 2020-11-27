@@ -1,5 +1,10 @@
+using BookStore.Business;
+using BookStore.Business.Interfaces;
+using BookStore.Repository;
+using BookStore.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +23,14 @@ namespace BookStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();            
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IBookManager, BookManager>();
+
+            services.AddDbContext<BookStoreContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddHttpContextAccessor();
             services.AddControllers();
 
             services.AddSwaggerGen();
@@ -50,5 +62,5 @@ namespace BookStore
                 endpoints.MapControllers();
             });
         }
-    }
+    }   
 }

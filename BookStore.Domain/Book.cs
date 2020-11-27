@@ -1,13 +1,14 @@
-﻿namespace BookStore.Models
+﻿namespace BookStore.Domain
 {
-    public class BookViewModel
+    public class Book
     {
         public int BookId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Author { get; set; }
+        public int AuthorId { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
-        public bool IsInStock { get; set; }
+        public int InStock { get; set; }
+        public Author Author { get; set; }
     }
 }
