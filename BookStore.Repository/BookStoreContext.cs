@@ -11,10 +11,15 @@ namespace BookStore.Repository
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CustomerBook>().HasKey(bc => new { bc.BookId, bc.CustomerId });
+            modelBuilder.Entity<CustomerBook>(e =>
+            {
+                e.ToTable("CustomersBooks");
+                e.HasKey(bc => new { bc.BookId, bc.CustomerId });
+            });
             modelBuilder.Entity<CustomerBook>()
                 .HasOne(bc => bc.Book)
                 .WithMany(b => b.BookBuyers)

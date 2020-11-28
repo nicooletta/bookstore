@@ -7,7 +7,7 @@ namespace BookStore.Repository.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Customer",
+                name: "Customers",
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -19,11 +19,11 @@ namespace BookStore.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CustomerBook",
+                name: "CustomersBooks",
                 columns: table => new
                 {
                     BookId = table.Column<int>(type: "int", nullable: false),
@@ -31,34 +31,34 @@ namespace BookStore.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerBook", x => new { x.BookId, x.CustomerId });
+                    table.PrimaryKey("PK_CustomersBooks", x => new { x.BookId, x.CustomerId });
                     table.ForeignKey(
-                        name: "FK_CustomerBook_Books_BookId",
+                        name: "FK_CustomersBooks_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "BookId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerBook_Customer_CustomerId",
+                        name: "FK_CustomersBooks_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerBook_CustomerId",
-                table: "CustomerBook",
+                name: "IX_CustomersBooks_CustomerId",
+                table: "CustomersBooks",
                 column: "CustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CustomerBook");
+                name: "CustomersBooks");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Customers");
         }
     }
 }

@@ -10,6 +10,6 @@ namespace BookStore.Domain
         public string Phone { get; set; }
         public decimal Wallet { get; set; }
 
-        public IEnumerable<CustomerBook> BoughtBooks { get; set; }
+        public List<CustomerBook> BoughtBooks { get; set; }
     }
 }

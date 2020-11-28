@@ -89,7 +89,7 @@ namespace BookStore.Repository.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("BookStore.Domain.CustomerBook", b =>
@@ -104,7 +104,7 @@ namespace BookStore.Repository.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerBook");
+                    b.ToTable("CustomersBooks");
                 });
 
             modelBuilder.Entity("BookStore.Domain.Book", b =>

@@ -62,7 +62,7 @@ namespace BookStore.Controllers
 
         [HttpPut("{id}")]
         public async Task<ActionResult<BookViewModel>> UpdateBookAsync(
-            [Required][Range(1, int.MaxValue, ErrorMessage = "Incorrect book id")]int bookId,
+            [Required][Range(1, int.MaxValue, ErrorMessage = "Incorrect book id")]int id,
             [FromBody] BookUpdateDTO updateBook)
         {
             if (!ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace BookStore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var modifiedBook = await bookManager.UpdateBookAsync(bookId, updateBook);
+            var modifiedBook = await bookManager.UpdateBookAsync(id, updateBook);
 
             if (modifiedBook == null)
             {
@@ -86,6 +86,28 @@ namespace BookStore.Controllers
         {            
             await bookManager.DeleteBookAsync(id);
             return NoContent();
+        }
+
+        [HttpPost("{id}/Buy")]
+        public async Task<ActionResult<BuyResultViewModel>> BuyBook(
+            [Required][Range(1, int.MaxValue, ErrorMessage = "Incorrect book id")] int id,
+            [FromBody] int customerId  //noramlly would be determined from current authenticated user
+            )
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var purcheseResult = await bookManager.SellBook(id, customerId);
+            var response = new BuyResultViewModel
+            {
+                BookId = purcheseResult.BookId,
+                CustomerId = purcheseResult.CustomerId,
+                CustomerNewWallet = purcheseResult.CustomerNewWallet,
+                IsStillInStock = purcheseResult.IsStillInStock
+            };
+            return Ok(response);
         }
     }
 }

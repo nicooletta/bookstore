@@ -26,6 +26,7 @@ namespace BookStore
         {
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IBookManager, BookManager>();
 
             services.AddDbContext<BookStoreContext>(options =>

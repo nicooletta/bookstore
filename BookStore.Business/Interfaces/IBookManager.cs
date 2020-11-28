@@ -12,5 +12,6 @@ namespace BookStore.Business.Interfaces
         Task DeleteBookAsync(int id);
         Task<Book> GetBookAsync(int id);
         Task<IEnumerable<Book>> GetAllBooksAsync();
+        Task<BuyCommandResultDTO> SellBook(int bookId, int customerId);
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Repository.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    [Migration("20201127201551_AddBookBuyers")]
+    [Migration("20201128211340_AddBookBuyers")]
     partial class AddBookBuyers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,7 +91,7 @@ namespace BookStore.Repository.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("BookStore.Domain.CustomerBook", b =>
@@ -106,7 +106,7 @@ namespace BookStore.Repository.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerBook");
+                    b.ToTable("CustomersBooks");
                 });
 
             modelBuilder.Entity("BookStore.Domain.Book", b =>
