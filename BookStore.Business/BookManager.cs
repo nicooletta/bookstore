@@ -38,9 +38,9 @@ namespace BookStore.Business
             return book;
         }
 
-        public async Task<Book> UpdateBookAsync(BookUpdateDTO updateBook)
+        public async Task<Book> UpdateBookAsync(int bookId, BookUpdateDTO updateBook)
         {            
-            var currentBook = await bookRepository.FindBookAsync(updateBook.BookId);
+            var currentBook = await bookRepository.FindBookAsync(bookId);
             bool isAuthorChanged = updateBook.AuthorId != currentBook.AuthorId;
             currentBook.Name = updateBook.Name;
             currentBook.Description = updateBook.Description;

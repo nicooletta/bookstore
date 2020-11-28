@@ -4,6 +4,7 @@ using BookStore.Mapper;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace BookStore.Controllers
@@ -47,7 +48,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BookViewModel>> CreateBookAsync(BookCreateDTO newBook)
+        public async Task<ActionResult<BookViewModel>> CreateBookAsync([FromBody] BookCreateDTO newBook)
         {
             if (!ModelState.IsValid)
             {
@@ -59,15 +60,17 @@ namespace BookStore.Controllers
             return Ok(bookView);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<BookViewModel>> UpdateBookAsync(BookUpdateDTO updateBook)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BookViewModel>> UpdateBookAsync(
+            [Required][Range(1, int.MaxValue, ErrorMessage = "Incorrect book id")]int bookId,
+            [FromBody] BookUpdateDTO updateBook)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var modifiedBook = await bookManager.UpdateBookAsync(updateBook);
+            var modifiedBook = await bookManager.UpdateBookAsync(bookId, updateBook);
 
             if (modifiedBook == null)
             {

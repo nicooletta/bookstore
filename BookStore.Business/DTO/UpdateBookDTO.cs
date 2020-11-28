@@ -3,11 +3,7 @@
 namespace BookStore.Business.DTO
 {
     public class BookUpdateDTO
-    {
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Incorrect book id")]
-        public int BookId { get; set; }
-
+    {       
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
