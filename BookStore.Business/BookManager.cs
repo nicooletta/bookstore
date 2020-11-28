@@ -3,6 +3,7 @@ using BookStore.Business.Exceptions;
 using BookStore.Business.Interfaces;
 using BookStore.Domain;
 using BookStore.Repository.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookStore.Business
@@ -38,9 +39,8 @@ namespace BookStore.Business
         }
 
         public async Task<Book> UpdateBookAsync(BookUpdateDTO updateBook)
-        {
-            
-            var currentBook = await bookRepository.FindBook(updateBook.BookId);
+        {            
+            var currentBook = await bookRepository.FindBookAsync(updateBook.BookId);
             bool isAuthorChanged = updateBook.AuthorId != currentBook.AuthorId;
             currentBook.Name = updateBook.Name;
             currentBook.Description = updateBook.Description;
@@ -59,6 +59,26 @@ namespace BookStore.Business
             return book;
         }
 
+        public async Task DeleteBookAsync(int id)
+        {
+            var deleteBook = await bookRepository.FindBookAsync(id);
+            if (deleteBook == null)
+            {
+                throw new ResourceNotFoundException($"Provided Book with id {id} does not exist");
+            }
+            await bookRepository.DeleteBookAsync(deleteBook);
+        }
+
+        public async Task<Book> GetBookAsync(int id)
+        {
+           return await bookRepository.FindBookAsync(id);
+        }
+
+        public async Task<IEnumerable<Book>> GetAllBooksAsync()
+        {
+            return await bookRepository.GetAllBooksAsync();
+        }
+
         private async Task<Author> GetOrCreateAuthorAsync(BookCreateDTO newBook)
         {
             if (newBook.AuthorId != null)
@@ -66,7 +86,7 @@ namespace BookStore.Business
                 var existingAuthor = await authorRepository.FindAsync(newBook.AuthorId.Value);
                 if (existingAuthor == null)
                 {
-                    throw new ValidationFailException("Provided author does not exists in our list");
+                    throw new ResourceNotFoundException("Provided author does not exists in our list");
                 }
                 return existingAuthor;
             }

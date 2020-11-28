@@ -1,5 +1,6 @@
 ﻿using BookStore.Business.DTO;
 using BookStore.Domain;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookStore.Business.Interfaces
@@ -8,5 +9,8 @@ namespace BookStore.Business.Interfaces
     {
         Task<Book> CreateBookAsync(BookCreateDTO newBook);
         Task<Book> UpdateBookAsync(BookUpdateDTO updateBook);
+        Task DeleteBookAsync(int id);
+        Task<Book> GetBookAsync(int id);
+        Task<IEnumerable<Book>> GetAllBooksAsync();
     }
 }

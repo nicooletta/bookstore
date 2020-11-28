@@ -30,6 +30,11 @@ namespace BookStore.Configuration
                             errorMessage = $"Validation error: {string.Join(", ", validationError.ValidationErrors)}";
                             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         }
+                        else if (contextFeature.Error is ResourceNotFoundException)
+                        {
+                            errorMessage = $"Resource not found: {contextFeature.Error.Message}";
+                            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        }
 
                         await context.Response.WriteAsync(new ErrorDetails()
                         {
