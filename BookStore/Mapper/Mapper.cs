@@ -1,20 +1,30 @@
-﻿using BookStore.Models;
+﻿using BookStore.Domain;
+using BookStore.Models;
 
 namespace BookStore.Mapper
 {
-    public static class BookMapper
+    public static class Mapper
     {
-        public static BookViewModel MapBook(Domain.Book createdBook)
+        public static BookViewModel MapBook(Book sourcebook)
         {
             return new BookViewModel
             {
-                Author = createdBook.Author.FirstName + " " + createdBook.Author.LastName,
-                BookId = createdBook.BookId,
-                Description = createdBook.Description,
-                ImageUrl = createdBook.ImageUrl,
-                IsInStock = createdBook.InStock > 0,
-                Name = createdBook.Name,
-                Price = createdBook.Price
+                Author = sourcebook.Author.FirstName + " " + sourcebook.Author.LastName,
+                BookId = sourcebook.BookId,
+                Description = sourcebook.Description,
+                ImageUrl = sourcebook.ImageUrl,
+                IsInStock = sourcebook.InStock > 0,
+                Name = sourcebook.Name,
+                Price = sourcebook.Price
+            };
+        }
+
+        public static AuthorViewModel MapAuthor(Author sourcebook)
+        {
+            return new AuthorViewModel
+            {
+                FirstName = sourcebook.FirstName,
+                LastName = sourcebook.LastName
             };
         }
     }

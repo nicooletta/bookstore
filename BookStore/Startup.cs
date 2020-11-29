@@ -28,6 +28,7 @@ namespace BookStore
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IBookManager, BookManager>();
+            services.AddTransient<IAuthorManager, AuthorManager>();
 
             services.AddDbContext<BookStoreContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

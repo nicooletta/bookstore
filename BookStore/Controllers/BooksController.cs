@@ -1,6 +1,5 @@
 ﻿using BookStore.Business.DTO;
 using BookStore.Business.Interfaces;
-using BookStore.Mapper;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -26,8 +25,8 @@ namespace BookStore.Controllers
             var booksList = await bookManager.GetAllBooksAsync();
             var result = new List<BookViewModel>();
             foreach (var book in booksList)
-            {
-                result.Add(BookMapper.MapBook(book));
+            {               
+                result.Add(Mapper.Mapper.MapBook(book));
             }
 
             return Ok(result);
@@ -42,7 +41,7 @@ namespace BookStore.Controllers
             {
                 return NotFound($"Couldn’t found Book of id {id}");
             }
-            var bookView = BookMapper.MapBook(book);
+            var bookView = Mapper.Mapper.MapBook(book);
 
             return bookView;
         }
@@ -56,7 +55,7 @@ namespace BookStore.Controllers
             }
 
             var createdBook = await bookManager.CreateBookAsync(newBook);
-            BookViewModel bookView = BookMapper.MapBook(createdBook);
+            BookViewModel bookView = Mapper.Mapper.MapBook(createdBook);
             return Ok(bookView);
         }
 
@@ -77,7 +76,7 @@ namespace BookStore.Controllers
                 return NotFound();
             }
 
-            var bookView = BookMapper.MapBook(modifiedBook);
+            var bookView = Mapper.Mapper.MapBook(modifiedBook);
             return Ok(bookView);
         }
 

@@ -1,6 +1,8 @@
 ﻿using BookStore.Domain;
 using BookStore.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,6 +38,16 @@ namespace BookStore.Repository
 
             return context.Authors.FirstOrDefault(x => x.FirstName.ToLower() == firstName.ToLower() &&
                 x.LastName.ToLower() == lastName.ToLower());
+        }
+
+        public async Task<IEnumerable<Author>> GetAllAuthorsAsync()
+        {
+            return await context.Authors.ToListAsync();
+        }
+
+        public async Task<Author> FindAuthorAsync(int id)
+        {
+            return await context.Authors.FirstOrDefaultAsync(x => x.AuthorId == id);
         }
     }
 }
